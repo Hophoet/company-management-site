@@ -1,12 +1,16 @@
 import { createStore } from 'redux'
 
 const initialState = {
+  user:null
 }
 
-const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case 'default':
-      return {...state, ...rest }
+const changeState = (state = initialState, action) => {
+  switch (action.type) {
+      case 'SET_USER':
+          return {
+              ...state,
+              user: action.user
+          }
     default:
       return state
   }
