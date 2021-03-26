@@ -17,8 +17,10 @@ export default class AddPictureModal extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            taskTitle:'',
-            taskDescription:''
+            taskTitle:(this.props.taskToUpdate && this.props.taskToUpdate.title)?this.props.taskToUpdate.title:'',
+            taskDeadline:( this.props.taskToUpdate && this.props.taskToUpdate.deadline)?this.props.taskToUpdate.deadline:'',
+            taskDescription:( this.props.taskToUpdate && this.props.taskToUpdate.description)?this.props.taskToUpdate.description:'',
+            taskEmployee:( this.props.taskToUpdate && this.props.taskToUpdate.employee)?this.props.taskToUpdate.employee:''
        }
         this.taskToUpdate = this.props.taskToUpdate
     }
@@ -26,7 +28,12 @@ export default class AddPictureModal extends React.Component{
     _save = () => {
         if(this._formIsValid()){
             //check if it the update
-            this._addNewTask()
+            if(this.taskToUpdate){
+                this._updateTask()
+            }
+            else{
+                this._addNewTask()
+            }
         }
 
     }
@@ -35,11 +42,15 @@ export default class AddPictureModal extends React.Component{
         alert('ready to add the new employee')
     }
 
+    _updateTask = () => {
+        alert('ready to update the task')
+    }
+
     
 
 
     _formIsValid = () => {
-        if(this.state.taskTitle && this.state.taskDescription && this.state.taskEmployee){
+        if(this.state.taskTitle && this.state.taskDeadline && this.state.taskDescription && this.state.taskEmployee){
             return true
         }
         else if(!this.state.taskTitle){
@@ -50,6 +61,9 @@ export default class AddPictureModal extends React.Component{
         }
         else if(!this.state.taskEmployee){
             alert('select the task employee');
+        }
+        else if(!this.state.taskDealine){
+            alert('select the task dealine');
         }
 
     }
@@ -64,6 +78,7 @@ export default class AddPictureModal extends React.Component{
 
 
   componentDidMount() {
+
   }
 
     render(){
@@ -89,7 +104,7 @@ export default class AddPictureModal extends React.Component{
                             </CInputGroupText>
                             </CInputGroupPrepend>
                             <CInput 
-                                value={(this.taskToUpdate && this.taskToUpdate.name)?this.taskToUpdate.name:''}
+                                value={this.state.taskTitle}
                                 onChange={ e=> {this.setState({taskTitle:e.target.value})}} 
                                 type="text" placeholder="Title" autoComplete="username" />
                         </CInputGroup>
@@ -100,9 +115,9 @@ export default class AddPictureModal extends React.Component{
                             </CInputGroupText>
                             </CInputGroupPrepend>
                             <CInput 
-                                value={(this.taskToUpdate && this.taskToUpdate.description)?this.taskToUpdate.description:''}
+                                value={this.state.taskDescription}
                                 onChange={ e=> {this.setState({taskDescription:e.target.value})}} 
-                                type="text" placeholder="Description" autoComplete="new-password" />
+                                type="text" placeholder="Description"/>
                         </CInputGroup>
                         <CInputGroup className="mb-3">
                             <CInputGroupPrepend>
@@ -111,13 +126,24 @@ export default class AddPictureModal extends React.Component{
                             </CInputGroupText>
                             </CInputGroupPrepend>
                             <CInput 
-                                value={(this.taskToUpdate && this.taskToUpdate.employee)?this.taskToUpdate.employee:''}
+                                value={this.state.taskDeadline}
+                                onChange={ e=> {this.setState({taskDeadline:e.target.value})}} 
+                                type="text" placeholder="Deadline" />
+                        </CInputGroup>
+                        <CInputGroup className="mb-3">
+                            <CInputGroupPrepend>
+                            <CInputGroupText>
+                                {/* <CIcon name="cil-lock-locked" /> */}
+                            </CInputGroupText>
+                            </CInputGroupPrepend>
+                            <CInput 
+                                value={this.state.taskEmployee}
                                 onChange={ e=> {this.setState({taskEmployee:e.target.value})}} 
                                 type="text" placeholder="Employee" autoComplete="new-password" />
                         </CInputGroup>
                         <CButton 
                             onClick={this._save} 
-                            color="primary" block>ADD</CButton>
+                            color="primary" block>{(this.taskToUpdate)?'UPDATE':'ADD'}</CButton>
                         </CForm>
 
                     </div>
