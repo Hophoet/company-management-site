@@ -19,6 +19,7 @@ import {
   CIcon
 } from '@coreui/react'
 
+import AddAPhotoOutlined from '@material-ui/icons/AddAPhotoOutlined'
 
 export default class AddPictureModal extends React.Component{
     constructor(props){
@@ -116,7 +117,7 @@ export default class AddPictureModal extends React.Component{
                             <form>
                                 <label>
                                     <input className="fileuploadinput" type="file" onChange={this.handleUploadFileChange} />
-                                    <h1>pick profile</h1>
+                                    <AddAPhotoOutlined/>
                                 </label>
                             </form>
                         }
