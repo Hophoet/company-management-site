@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 import { motion } from 'framer-motion';
 import '../styles/EmployeeModal.css';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import {
   CButton,
   CForm,
@@ -17,6 +23,7 @@ export default class AddPictureModal extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            selectedEmployee:'',
             taskTitle:(this.props.taskToUpdate && this.props.taskToUpdate.title)?this.props.taskToUpdate.title:'',
             taskDeadline:( this.props.taskToUpdate && this.props.taskToUpdate.deadline)?this.props.taskToUpdate.deadline:'',
             taskDescription:( this.props.taskToUpdate && this.props.taskToUpdate.description)?this.props.taskToUpdate.description:'',
@@ -80,8 +87,13 @@ export default class AddPictureModal extends React.Component{
   componentDidMount() {
 
   }
+    selectedEmployeeChange = (event) => {
+        console.log(event.target.value);
+        this.setState({selectedEmployee:event.target.value});
+    }
 
     render(){
+        const employees = [{id:'kdj34', name:'ali'}, {id:"lsdfj43", name:"gray"}]
         return (
             <motion.div onClick={this.handleClick} className="backdrop" 
             initial={{ opacity: 0 }}
@@ -141,6 +153,22 @@ export default class AddPictureModal extends React.Component{
                                 onChange={ e=> {this.setState({taskEmployee:e.target.value})}} 
                                 type="text" placeholder="Employee" autoComplete="new-password" />
                         </CInputGroup>
+
+                    <FormControl className="employeeSelectForm">
+                        <InputLabel id="demo-simple-select-label">employee</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={this.state.selectedEmployee}
+                        onChange={this.selectedEmployeeChange}
+                        >
+                        {employees && employees.map(employee => (
+                            <MenuItem name={employee.name} value={employee.id}>{employee.name}</MenuItem>
+                        ))
+                        }
+                        </Select>
+                    </FormControl>
+
                         <CButton 
                             onClick={this._save} 
                             color="primary" block>{(this.taskToUpdate)?'UPDATE':'ADD'}</CButton>
