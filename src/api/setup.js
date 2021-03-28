@@ -8,7 +8,8 @@ const get_employees_url = `${domain}/api/employees`
 const add_employee_url = `${domain}/api/employees/add`
 const update_employee_url = `${domain}/api/employees/update`
 const delete_employee_url = `${domain}/api/employees/delete`
-
+// Tasks management
+const add_task_url = `${domain}/api/tasks/add`
 
 
 export {
@@ -18,5 +19,6 @@ export {
     get_employees_url,
     add_employee_url,
     update_employee_url,
-    delete_employee_url
+    delete_employee_url,
+    add_task_url
 }
