@@ -1,4 +1,5 @@
-import { add_task_url, update_task_url, delete_task_url } from './setup';
+import { add_task_url, update_task_url, 
+         delete_task_url, get_tasks_url } from './setup';
 
 function addTask(authToken, employee_id, title, description, deadline){
    return new Promise( (resolve, reject) => {
@@ -97,5 +98,34 @@ function deleteTask(authToken, task_id){
         .catch(error => {
             reject(error);
         })
+   })
+}
+
+
+
+function getTasks(authToken){
+   return new Promise( (resolve, reject) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
+    myHeaders.append("Authorization", "Token 	"+authToken); 
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    let status_code = 0;
+    fetch(get_tasks_url, requestOptions)
+        .then(response => {
+            status_code = response.status;
+            console.log(response)
+            return response.json();
+        })
+        .then(response => {
+            resolve(response);
+        })
+        .catch(error => {
+            reject(error);
+        })
+
    })
 }
