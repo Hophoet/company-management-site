@@ -18,23 +18,37 @@ import Footer from '../../components/containers/TheFooter';
 import Table from '../../components/tables/Tables' 
 import { getEmployees, deleteEmployee } from '../../api/employee'
 import { getTasks, deleteTask } from '../../api/task'
-const authToken = '75266956b2815dc42530a3d1b3964aa2bf474432'
+import {useHistory} from 'react-router-dom'
+
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const employees_table_fields = ['username', 'delete'];
 const tasks_table_fields = ['title', 'description', 'deadline', 'employee', 'update', 'delete'];
 
 
 const TheContent = () => {
-  const [employeeModalIsShow, toggleEmployeeModal] = useState(false)
-  const [taskModalIsShow, toggleTaskModal] = useState(false)
-  const [taskToUpdate, setTaskToUpdate] = useState(null)
-  const [employees, setEmployees] = useState([]);
-  const [tasks, setTasks] = useState([]);
+    const history = useHistory();
+    const user = useSelector(state => {
+       return  state.auth.user;
+    });
+    const authToken = user.authToken
+    const dispatch = useDispatch();
+    const [employeeModalIsShow, toggleEmployeeModal] = useState(false)
+    const [taskModalIsShow, toggleTaskModal] = useState(false)
+    const [taskToUpdate, setTaskToUpdate] = useState(null)
+    const [employees, setEmployees] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
   
 	useEffect(() => {
-    _getEmployees();
-    _getTasks();
+        if(!user.authToken){
+            history.push('/')
+        }
+        else{
+            _getEmployees();
+            _getTasks();
+        }
     }, [])	
    
 
