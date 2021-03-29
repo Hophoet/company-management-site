@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
 import {
   CButton,
   CCard,
@@ -15,31 +14,60 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import {Link, useHistory} from 'react-router-dom'
+import {login} from '../api/authentication';
+import { useStateValue } from '../redux/StateProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import  { setUser } from '../redux/actions'
 
 const Login = () => {
+    const user = useSelector(state => {
+       return  state.auth.user;
+    });
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-  const _login = () => {
-    if(_form_is_valid()){
-      alert('ready to log'); 
+    useEffect(() => {
+        console.log(user)
+
+    }, [])
+
+    const _login = () => {
+        console.log(user)
+        if(_form_is_valid()){
+            login(username, password)
+            .then(response => {
+                if(response.key){
+                    console.log(response) 
+                    dispatch(setUser({authToken:response.key}))
+                    history.push('/')
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            //history.push('/admin')
+        }
+
     }
 
-  }
+    const _form_is_valid = () => {
+        if(username && password){
+            return true;
+        }
+        else if(!username){
+            alert('Enter your username')
+            return false;
+        }
+        else if(!password){
+            alert('Enter your password')
+            return false;
+        }
+    }
 
-  const _form_is_valid = () => {
-      if(username && password){
-        return true;
-      }
-      else if(!username){
-        alert('Enter your username')
-        return false;
-      }
-      else if(!password){
-        alert('Enter your password')
-        return false;
-      }
-  }
+
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -51,6 +79,7 @@ const Login = () => {
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
+                    {user.name}
                     <p className="text-muted">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
