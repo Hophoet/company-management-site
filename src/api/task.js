@@ -129,3 +129,11 @@ function getTasks(authToken){
 
    })
 }
+
+
+export {
+    getTasks,
+    addTask,
+    deleteTask,
+    updateTask
+}
