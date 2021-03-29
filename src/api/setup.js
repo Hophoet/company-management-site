@@ -1,8 +1,8 @@
 
-const domain = 'http://localhost:8000';
+const domain = 'https://companymanagementapi.herokuapp.com';
 // Authentication
-const login_url = `${domain}/rest-auth/login`
-const register_url = `${domain}/rest-auth/registration`
+const login_url = `${domain}/auth/login/`
+const register_url = `${domain}/register`
 // Employees management
 const get_employees_url = `${domain}/api/employees`
 const add_employee_url = `${domain}/api/employees/add`
