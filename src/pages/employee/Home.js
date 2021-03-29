@@ -1,5 +1,5 @@
 
-import React, {useState}  from 'react'
+import React, {useState, useEffect}  from 'react'
 import {
   CCard,
   CCardBody,
@@ -11,23 +11,43 @@ import {
   CContainer
 } from '@coreui/react'
 
+import { useSelector, useDispatch } from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import Header from '../../components/containers/TheHeader';
 import Footer from '../../components/containers/TheFooter';
 
+import { getEmployeeTasks } from '../../api/task';
 
 
-const tasks_table_fields = ['title', 'description', 'deadline', 'employee'];
 
-const tasks_data = [
-  {id: 18, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'lay'},
-  {id: 13, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'rose'},
-  {id: 1, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'rhed'}
-];
+const tasks_table_fields = ['title', 'description', 'deadline'];
+
 
 const TheContent = () => {
 
+    const [tasks, setTasks] = useState([]);
+    const history = useHistory();
+    const user = useSelector(state => {
+       return  state.auth.user;
+    });
+	useEffect(() => {
+        _getEmployeeTasks();
+    }, [])	
 
-  //TASK
+    const _getEmployeeTasks = () => {
+        if(user.authToken){
+            getEmployeeTasks(user.authToken)
+            .then(response => {
+                setTasks(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+        else{
+            history.push('/login');
+        }
+    }
 
   return (
     <div className="c-app c-default-layout">
@@ -45,7 +65,7 @@ const TheContent = () => {
                             </CCardHeader>
                             <CCardBody>
                             <CDataTable
-                              items={tasks_data}
+                              items={tasks}
                               fields={tasks_table_fields}
                               hover
                               striped
@@ -54,6 +74,12 @@ const TheContent = () => {
                               itemsPerPage={2}
                               pagination
                               scopedSlots = {{
+                                'deadline':
+                                  (item)=>(
+                                    <td>
+                                        <p>{new Date(item.deadline).toDateString()}</p>
+                                    </td>
+                                  )
                               }}
                             />
                             </CCardBody>
