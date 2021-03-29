@@ -190,6 +190,12 @@ const TheContent = () => {
                                     <td>
                                         <CButton onClick={() => _deleteTask(item)} color="danger" className="">delete</CButton>
                                     </td>
+                                  ),
+                                'deadline':
+                                  (item)=>(
+                                    <td>
+                                        <p>{new Date(item.deadline).toDateString()}</p>
+                                    </td>
                                   )
                               }}
                             />
