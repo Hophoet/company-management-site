@@ -20,6 +20,7 @@ import {
 } from '@coreui/react'
 
 import AddAPhotoOutlined from '@material-ui/icons/AddAPhotoOutlined'
+import { addEmployee } from '../api/employee';
 
 export default class AddPictureModal extends React.Component{
     constructor(props){
@@ -29,10 +30,13 @@ export default class AddPictureModal extends React.Component{
             fileError:null,
             fileURL:'',
             employeeUsername:'',
-            employeePassword:''
+            employeePassword:'',
+            employeeSalary:0
        }
         this.employeeToUpdate = this.props.employeeToUpdate
         this.fileTypes = ['image/png', 'image/jpeg'];
+        this.authToken = this.props.authToken;
+
     }
 
     _save = () => {
@@ -44,12 +48,32 @@ export default class AddPictureModal extends React.Component{
     }
     
     _addNewEmployee = () => {
-        alert('ready to add the new employee')
+        console.log(this.state.file)
+        console.log(this.state.fileURL)
+
+        addEmployee(
+            this.authToken, 
+            this.state.employeeUsername,
+            this.state.employeePassword,
+            this.state.employeeSalary,
+            this.state.file
+        )
+        .then(response =>  {
+            if(response.username){
+                this.props.getEmployees();
+                this.props.toggleEmployeeModal();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+
     }
 
 
     _formIsValid = () => {
-        if(this.state.employeePassword && this.state.employeePassword && this.state.file){
+        if( this.state.employeeSalary && this.state.employeePassword && this.state.employeePassword && this.state.file){
             return true
         }
         else if(!this.state.employeeUsername){
@@ -57,6 +81,9 @@ export default class AddPictureModal extends React.Component{
         }
         else if(!this.state.employeePassword){
             alert('Enter the employee password');
+        }
+        else if(!this.state.employeeSalary){
+            alert('Enter the employee salary');
         }
         else if(!this.state.file){
             alert('select the employee picture');
@@ -143,6 +170,16 @@ export default class AddPictureModal extends React.Component{
                             <CInput 
                                 onChange={ e=> {this.setState({employeePassword:e.target.value})}} 
                                 type="password" placeholder="Password" autoComplete="new-password" />
+                        </CInputGroup>
+                        <CInputGroup className="mb-3">
+                            <CInputGroupPrepend>
+                            <CInputGroupText>
+                                {/* <CIcon name="cil-lock-locked" /> */}
+                            </CInputGroupText>
+                            </CInputGroupPrepend>
+                            <CInput 
+                                onChange={ e=> {this.setState({employeeSalary:e.target.value})}} 
+                                type="number" placeholder="Salart"  />
                         </CInputGroup>
                         <CButton 
                             onClick={this._save} 
