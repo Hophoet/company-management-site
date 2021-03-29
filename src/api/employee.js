@@ -5,8 +5,12 @@ import { get_employees_url,  delete_employee_url,
 function getEmployees(authToken){
    return new Promise( (resolve, reject) => {
     var myHeaders = new Headers();
-    myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
+    //myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
+    //myHeaders.append('Content-Type', 'application/json');
+    //myHeaders.append('Accept', 'application/json');
+    //myHeaders.append('Origin','http://localhost:3000');
     myHeaders.append("Authorization", "Token 	"+authToken); 
+    myHeaders.append("Cookie", "messages=\"[[\\\"__json_message\\\"\\0540\\05425\\054\\\"Successfully signed in as test1.\\\"]]:1lQoad:J14TtrmfGc4_A8x1trPMMK67ZY60HVCA7gmo5pjG2jQ\"; csrftoken=sPoaHZWcbupywrMAmM20ODuPdBjiASsz77Oleh01NhWPcyEclCBLBvoEMXecJvQ4; sessionid=ryctcyd7m3hutocdrugy409yueejqcfk");
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -15,7 +19,7 @@ function getEmployees(authToken){
     let status_code = 0;
     fetch(get_employees_url, requestOptions)
         .then(response => {
-            status_code = response.status;
+            //status_code = response.status;
             console.log(response)
             return response.json();
         })
@@ -29,7 +33,7 @@ function getEmployees(authToken){
    })
 }
 
-function addEmployee(authToken, username, password, salary, pictureName){
+function addEmployee(authToken, username, password, salary, picture){
    return new Promise( (resolve, reject) => {
     var myHeaders = new Headers();
     myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
@@ -38,7 +42,7 @@ function addEmployee(authToken, username, password, salary, pictureName){
     var formdata = new FormData();
     formdata.append("username", username);
     formdata.append("salary", salary);
-    formdata.append("picture", fileInput.files[0], pictureName);
+    formdata.append("picture", picture, 'pictureName');
     formdata.append("password", password);
 
     var requestOptions = {
@@ -65,7 +69,7 @@ function addEmployee(authToken, username, password, salary, pictureName){
 
 
 
-function updateEmployee(authToken, employee_id, username, salary, pictureName){
+function updateEmployee(authToken, employee_id, username, salary, picture){
    return new Promise( (resolve, reject) => {
     var myHeaders = new Headers();
     myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
@@ -75,7 +79,7 @@ function updateEmployee(authToken, employee_id, username, salary, pictureName){
     formdata.append("employee_id", employee_id);
     formdata.append("username", username);
     formdata.append("salary", salary);
-    formdata.append("picture", fileInput.files[0], pictureName);
+    formdata.append("picture", picture, 'pic');
 
     var requestOptions = {
       method: 'POST',
@@ -132,4 +136,13 @@ function deleteEmployee(authToken, employee_id){
         })
 
    })
+}
+
+
+
+export {
+    getEmployees,
+    addEmployee,
+    updateEmployee,
+    deleteEmployee
 }
