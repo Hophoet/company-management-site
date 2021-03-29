@@ -1,4 +1,4 @@
-import React, {useState}  from 'react'
+import React, {useState, useEffect}  from 'react'
 import {
   CCard,
   CCardBody,
@@ -16,34 +16,63 @@ import Header from '../../components/containers/TheHeader';
 import Footer from '../../components/containers/TheFooter';
 
 import Table from '../../components/tables/Tables' 
+import { getEmployees, deleteEmployee } from '../../api/employee'
+import { getTasks, deleteTask } from '../../api/task'
+const authToken = '75266956b2815dc42530a3d1b3964aa2bf474432'
 
-
-const employees_table_fields = ['name', 'delete'];
+const employees_table_fields = ['username', 'delete'];
 const tasks_table_fields = ['title', 'description', 'deadline', 'employee', 'update', 'delete'];
-const employees_data = [
-  {id: 18, name: 'Micheal Mercurius'},
-  {id: 19, name: 'Ganesha Dubhghall'},
-  {id: 20, name: 'Hiroto Šimun'},
-  {id: 21, name: 'Vishnu Serghei'}
-];
 
-const tasks_data = [
-  {id: 18, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'lay'},
-  {id: 13, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'rose'},
-  {id: 1, title: 'Micheal Mercurius', description:'the reald value of the task is to test your knownledge in node', deadline:'12-03-2021', employee:'rhed'}
-];
 
 const TheContent = () => {
   const [employeeModalIsShow, toggleEmployeeModal] = useState(false)
   const [taskModalIsShow, toggleTaskModal] = useState(false)
   const [taskToUpdate, setTaskToUpdate] = useState(null)
+  const [employees, setEmployees] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
+  
+	useEffect(() => {
+    _getEmployees();
+    _getTasks();
+    }, [])	
+   
+
+  const _getEmployees = () => {
+      getEmployees(authToken)
+      .then(response => {
+        setEmployees(response);
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+
+  const _getTasks = () => {
+      getTasks(authToken)
+      .then(response => {
+        setTasks(response);
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
   //EMPLOYEE
   const _addNewEmployee = () => {
       _toggleEmployeeModal()
   }
   const _deleteEmploye = (employee) => {
-      alert('ready to delete '+employee.name)
+    if(window.confirm('Do you want to delete '+employee.username)){
+        deleteEmployee(authToken, employee.id)
+        .then((response) => {
+            _getEmployees();
+            _getTasks();
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+      }
   } 
   const _toggleEmployeeModal = () =>{
     toggleEmployeeModal(!employeeModalIsShow)
@@ -58,7 +87,16 @@ const TheContent = () => {
       _toggleTaskModal()
   }
   const _deleteTask = (task) => {
-      alert('ready to delete '+task.title)
+    if(window.confirm('Do you want to delete '+task.title)){
+      deleteTask(authToken, task.id)
+      .then(response =>  {
+          _getTasks()
+      })
+      .catch(error=>{
+          console.log('task delete request failed');
+          console.log(error);
+      })
+    }
   } 
   const _toggleTaskModal = () =>{
     if(taskModalIsShow){
@@ -66,6 +104,7 @@ const TheContent = () => {
     }
     toggleTaskModal(!taskModalIsShow)
   }
+
 
   return (
     <div className="c-app c-default-layout">
@@ -85,7 +124,7 @@ const TheContent = () => {
                             </CCardHeader>
                             <CCardBody>
                             <CDataTable
-                              items={employees_data}
+                              items={employees}
                               fields={employees_table_fields}
                               hover
                               striped
@@ -117,7 +156,7 @@ const TheContent = () => {
                             </CCardHeader>
                             <CCardBody>
                             <CDataTable
-                              items={tasks_data}
+                              items={tasks}
                               fields={tasks_table_fields}
                               hover
                               striped
@@ -149,7 +188,12 @@ const TheContent = () => {
                     <EmployeeModal toggleEmployeeModal={_toggleEmployeeModal}/>
                 )}
                 { taskModalIsShow &&(
-                    <TaskModal taskToUpdate={taskToUpdate} toggleTaskModal={_toggleTaskModal}/>
+                    <TaskModal 
+                        employees={employees} 
+                        authToken={authToken} 
+                        taskToUpdate={taskToUpdate} 
+                        getTasks={_getTasks}
+                        toggleTaskModal={_toggleTaskModal}/>
                 )}
                 </main>
             </div>
