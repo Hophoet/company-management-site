@@ -185,7 +185,11 @@ const TheContent = () => {
                       </CRow>      
                     </CContainer>
                 { employeeModalIsShow &&(
-                    <EmployeeModal toggleEmployeeModal={_toggleEmployeeModal}/>
+                    <EmployeeModal 
+                        toggleEmployeeModal={_toggleEmployeeModal}
+                        authToken={authToken} 
+                        getEmployees={_getEmployees}
+                    />
                 )}
                 { taskModalIsShow &&(
                     <TaskModal 
