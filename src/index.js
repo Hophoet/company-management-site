@@ -3,20 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { Provider } from 'react-redux';
 
 import "@coreui/coreui/scss/coreui.scss";
 
-import { Provider } from 'react-redux'
-import store from './store'
+import { StateProvider } from './redux/StateProvider';
+import { createStore } from 'redux';
+import  reducers from './redux/reducer';
+const store = createStore(reducers);
 
 ReactDOM.render(
-  <Provider store={store}>
-
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+   <React.StrictMode>
+    <Provider store={store}>
+        <App />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
