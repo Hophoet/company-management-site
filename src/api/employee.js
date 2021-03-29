@@ -42,7 +42,7 @@ function addEmployee(authToken, username, password, salary, picture){
     var formdata = new FormData();
     formdata.append("username", username);
     formdata.append("salary", salary);
-    formdata.append("picture", picture, 'pictureName');
+    formdata.append("picture", picture);
     formdata.append("password", password);
 
     var requestOptions = {
