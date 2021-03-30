@@ -35,7 +35,6 @@ const Login = () => {
     }, [])
 
     const _login = () => {
-        console.log(user)
         if(_form_is_valid()){
             login(username, password)
             .then(response => {
@@ -79,7 +78,6 @@ const Login = () => {
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
-                    {user.name}
                     <p className="text-muted">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
@@ -115,8 +113,7 @@ const Login = () => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.</p>
+                    <p>Create your free employee account</p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
                     </Link>
