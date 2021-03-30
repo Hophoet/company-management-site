@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
 import {
   CButton,
   CCard,
@@ -15,17 +14,40 @@ import {
   CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { useSelector, useDispatch } from 'react-redux';
+import {Link, useHistory} from 'react-router-dom'
+import { register } from '../api/authentication';
+import  { setUser } from '../redux/actions';
 
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const user = useSelector(state => {
+       return  state.auth.user;
+    });
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const _signup = () => {
-    if(_form_is_valid()){
-      alert('ready to signup');
+    useEffect(() => {
+        console.log(user)
+
+    }, [])
+
+    const _signup = () => {
+        if(_form_is_valid()){
+            register(username, password)
+            .then(response => {
+                if(response.key){
+                    dispatch(setUser({authToken:response.key}));
+                    history.push('/');
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
     }
-  }
   const _form_is_valid = () => {
     if(username && password && passwordConfirmation){
         if(password == passwordConfirmation){
