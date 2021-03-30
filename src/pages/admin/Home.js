@@ -32,7 +32,9 @@ const TheContent = () => {
     const user = useSelector(state => {
        return  state.auth.user;
     });
-    const authToken = user.authToken
+    const authToken = useSelector(state => {
+       return  state.auth.authToken;
+    });
     const dispatch = useDispatch();
     const [employeeModalIsShow, toggleEmployeeModal] = useState(false)
     const [taskModalIsShow, toggleTaskModal] = useState(false)
@@ -42,14 +44,14 @@ const TheContent = () => {
 
   
 	useEffect(() => {
-        if(!user.authToken){
-            history.push('/')
+        if(!authToken){
+            history.push('/login')
         }
         else{
             _getEmployees();
             _getTasks();
         }
-    }, [])	
+    }, [authToken])	
    
 
   const _getEmployees = () => {
@@ -123,7 +125,7 @@ const TheContent = () => {
   return (
     <div className="c-app c-default-layout">
         <div className="c-wrapper">
-            <Header/>
+            <Header user={user}/>
             <div className="c-body">
                 <main className="c-main">
                     <CContainer fluid>
