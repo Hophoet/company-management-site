@@ -20,8 +20,8 @@ import { register } from '../api/authentication';
 import  { setUser } from '../redux/actions';
 
 const Register = () => {
-    const user = useSelector(state => {
-       return  state.auth.user;
+    const authToken = useSelector(state => {
+       return  state.auth.authToken;
     });
     const dispatch = useDispatch();
     const history = useHistory();
@@ -30,7 +30,7 @@ const Register = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     useEffect(() => {
-        console.log(user)
+        console.log(authToken)
 
     }, [])
 
@@ -39,8 +39,8 @@ const Register = () => {
             register(username, password)
             .then(response => {
                 if(response.key){
-                    dispatch(setUser({authToken:response.key}));
-                    history.push('/');
+                    dispatch(setUser(response.key));
+                    //history.push('/');
                 }
             })
             .catch(error => {
