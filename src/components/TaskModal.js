@@ -193,7 +193,6 @@ export default class AddPictureModal extends React.Component{
                             </CInputGroupText>
                             </CInputGroupPrepend>
                             <CInput 
-                                value={this.state.taskDeadline}
                                 onChange={ e=> {this.setState({taskDeadline:e.target.value + " 00:00:00"})}} 
                                 type="date" placeholder="Deadline" />
                         </CInputGroup>
