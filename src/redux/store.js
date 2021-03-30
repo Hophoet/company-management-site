@@ -1,9 +1,7 @@
 import { createStore } from 'redux';
 
 const store = createStore(()=>  ({
-    user:{
-        name:'test user'
-    }
+    user:null
 }))
 
 export default store;
