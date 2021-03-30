@@ -30,7 +30,6 @@ const Register = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     useEffect(() => {
-        console.log(authToken)
 
     }, [])
 

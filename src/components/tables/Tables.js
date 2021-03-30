@@ -10,7 +10,7 @@ import {
 } from '@coreui/react'
 
 
-const fields = ['name', 'actions'];
+const fields = ['name', 'update', 'delete'];
 const usersData = [
   {id: 18, name: 'Micheal Mercurius'},
   {id: 19, name: 'Ganesha Dubhghall'},
@@ -27,9 +27,10 @@ const Tables = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Employees
+              <CButton color="success" className="">
+                add new employee
+               </CButton>
             </CCardHeader>
-            <CButton color="success" className="">add new employee</CButton>
             <CCardBody>
             <CDataTable
               items={usersData}
@@ -41,10 +42,15 @@ const Tables = () => {
               itemsPerPage={2}
               pagination
               scopedSlots = {{
-                'actions':
+                'update':
                   (item)=>(
                     <td>
                         <CButton color="primary" className="">update</CButton>
+                    </td>
+                  ),
+                'delete':
+                  (item)=>(
+                    <td>
                         <CButton color="danger" className="">delete</CButton>
                     </td>
                   )

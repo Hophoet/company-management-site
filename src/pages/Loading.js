@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import {isAdmin, getAuthenticatedUser  } from '../api/authentication'
 import  {setUser } from '../redux/actions'
@@ -15,10 +15,6 @@ const Loading = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 	useEffect(() => {
-        console.log('loadind auth token')
-        console.log(authToken)
-        console.log('loading user')
-        console.log(user);
         _handleRoute();
     }, [])	
 
@@ -28,7 +24,6 @@ const Loading = () => {
         }
         else{
             history.push('/login');
-            console.log('not auth token')
         }
     }
     
@@ -44,8 +39,7 @@ const Loading = () => {
             }
         })
         .catch(error => {
-            console.log('is admin error');
-            console.log(error);
+            //console.log(error);
         })
     }
 
@@ -61,7 +55,7 @@ const Loading = () => {
             }
         })
         .catch(error => {
-            console.log(error);
+            //console.log(error);
         })
     }
 

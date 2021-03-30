@@ -118,7 +118,6 @@ function getTasks(authToken){
     fetch(get_tasks_url, requestOptions)
         .then(response => {
             status_code = response.status;
-            console.log(response)
             return response.json();
         })
         .then(response => {

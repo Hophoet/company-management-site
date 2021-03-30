@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 
 import "@coreui/coreui/scss/coreui.scss";
 
-import { StateProvider } from './redux/StateProvider';
 import { createStore } from 'redux';
 import  reducers from './redux/reducer';
 const store = createStore(reducers);

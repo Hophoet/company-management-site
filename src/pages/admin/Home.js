@@ -15,7 +15,6 @@ import TaskModal from '../../components/TaskModal';
 import Header from '../../components/containers/TheHeader';
 import Footer from '../../components/containers/TheFooter';
 
-import Table from '../../components/tables/Tables' 
 import { getEmployees, deleteEmployee } from '../../api/employee'
 import { getTasks, deleteTask } from '../../api/task'
 import {useHistory} from 'react-router-dom'
@@ -23,7 +22,7 @@ import {useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
 
-const employees_table_fields = ['username', 'delete'];
+const employees_table_fields = ['username', 'salary', 'delete'];
 const tasks_table_fields = ['title', 'description', 'deadline', 'employee', 'update', 'delete'];
 
 
@@ -60,7 +59,7 @@ const TheContent = () => {
         setEmployees(response);
       })
       .catch(error => {
-        console.log(error)
+        //console.log(error)
       })
   }
 
@@ -71,7 +70,7 @@ const TheContent = () => {
         setTasks(response);
       })
       .catch(error => {
-        console.log(error)
+        //console.log(error)
       })
   }
   //EMPLOYEE
@@ -86,7 +85,7 @@ const TheContent = () => {
             _getTasks();
         })
         .catch((error) => {
-            console.log(error)
+            //console.log(error)
         })
       }
   } 
@@ -109,8 +108,7 @@ const TheContent = () => {
           _getTasks()
       })
       .catch(error=>{
-          console.log('task delete request failed');
-          console.log(error);
+          //console.log(error);
       })
     }
   } 
@@ -146,13 +144,19 @@ const TheContent = () => {
                               striped
                               bordered
                               size="sm"
-                              itemsPerPage={2}
+                              itemsPerPage={5}
                               pagination
                               scopedSlots = {{
                                 'delete':
                                   (item)=>(
                                     <td>
                                         <CButton onClick={() =>_deleteEmploye(item)} color="danger" className="">delete</CButton>
+                                    </td>
+                                  ),
+                                'salary':
+                                  (item)=>(
+                                    <td>
+                                        <p>{item.profil}</p>
                                     </td>
                                   )
                               }}
@@ -178,7 +182,7 @@ const TheContent = () => {
                               striped
                               bordered
                               size="sm"
-                              itemsPerPage={2}
+                              itemsPerPage={5}
                               pagination
                               scopedSlots = {{
                                 'update':

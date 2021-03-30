@@ -16,13 +16,11 @@ import {
 import CIcon from '@coreui/icons-react'
 import {Link, useHistory} from 'react-router-dom'
 import {login} from '../api/authentication';
-import { useStateValue } from '../redux/StateProvider';
 import { useSelector, useDispatch } from 'react-redux';
 import  {setAuthToken } from '../redux/actions'
 
 const Login = () => {
     const authToken = useSelector(state => {
-        console.log(state)
        return  state.auth.authToken;
     });
     const dispatch = useDispatch();
@@ -39,15 +37,13 @@ const Login = () => {
             login(username, password)
             .then(response => {
                 if(response.key){
-                    console.log(response) 
                     dispatch(setAuthToken(response.key))
                     history.push('/')
                 }
             })
             .catch(error => {
-                console.log(error)
+                //console.log(error)
             })
-            //history.push('/admin')
         }
 
     }

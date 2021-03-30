@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import { motion } from 'framer-motion';
 import '../styles/EmployeeModal.css';
 
@@ -48,8 +47,6 @@ export default class AddPictureModal extends React.Component{
     }
     
     _addNewEmployee = () => {
-        console.log(this.state.file)
-        console.log(this.state.fileURL)
 
         addEmployee(
             this.authToken, 
@@ -65,7 +62,7 @@ export default class AddPictureModal extends React.Component{
             }
         })
         .catch(error => {
-            console.log(error);
+            //console.log(error);
         })
 
 

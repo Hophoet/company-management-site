@@ -5,10 +5,6 @@ import { get_employees_url,  delete_employee_url,
 function getEmployees(authToken){
    return new Promise( (resolve, reject) => {
     var myHeaders = new Headers();
-    //myHeaders.append("Cookie", "sessionid=bc2iakrk8931d7vuemt4zokzh8mtwy7clq; csrftoken=nljayGbkE6SoP9XjdkfPwvIRDWGrfJbypkiOZnWsJs8VznBw9EuN6UCr18pzOXh4mDq9");
-    //myHeaders.append('Content-Type', 'application/json');
-    //myHeaders.append('Accept', 'application/json');
-    //myHeaders.append('Origin','http://localhost:3000');
     myHeaders.append("Authorization", "Token 	"+authToken); 
     myHeaders.append("Cookie", "messages=\"[[\\\"__json_message\\\"\\0540\\05425\\054\\\"Successfully signed in as test1.\\\"]]:1lQoad:J14TtrmfGc4_A8x1trPMMK67ZY60HVCA7gmo5pjG2jQ\"; csrftoken=sPoaHZWcbupywrMAmM20ODuPdBjiASsz77Oleh01NhWPcyEclCBLBvoEMXecJvQ4; sessionid=ryctcyd7m3hutocdrugy409yueejqcfk");
     var requestOptions = {
@@ -20,7 +16,6 @@ function getEmployees(authToken){
     fetch(get_employees_url, requestOptions)
         .then(response => {
             //status_code = response.status;
-            console.log(response)
             return response.json();
         })
         .then(response => {

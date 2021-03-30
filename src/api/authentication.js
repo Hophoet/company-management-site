@@ -1,4 +1,4 @@
-import {domain, get_authenticated_user_url, login_url, register_url, is_admin_url} from './setup';
+import {get_authenticated_user_url, login_url, register_url, is_admin_url} from './setup';
 
 function login(username, password){
    return new Promise( (resolve, reject) => {
@@ -22,7 +22,6 @@ function login(username, password){
     fetch(login_url, requestOptions)
         .then(response => {
             let status_code = response.status;
-            console.log(response)
             return response.json();
         })
         .then(response => {
@@ -100,7 +99,6 @@ function register(username, password){
     fetch(register_url, requestOptions)
         .then(response => {
             let status_code = response.status;
-            console.log(response)
             return response.json();
         })
         .then(response => {
@@ -112,7 +110,6 @@ function register(username, password){
 
    })
 }
-
 
 
 export {

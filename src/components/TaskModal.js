@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import { motion } from 'framer-motion';
 import '../styles/EmployeeModal.css';
 
 import InputLabel from '@material-ui/core/InputLabel';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -68,11 +66,9 @@ export default class AddPictureModal extends React.Component{
                 this.props.getTasks();
                 this.props.toggleTaskModal();
             }
-            console.log('add successfulyy')
         })
         .catch(error => {
-            console.log('add failed')
-            console.log(error)
+            //console.log(error)
 
         })
     }
@@ -90,7 +86,7 @@ export default class AddPictureModal extends React.Component{
             this.props.toggleTaskModal();
         })
         .catch(error => {
-            console.log(error);
+           //console.log(error);
         })
     }
 

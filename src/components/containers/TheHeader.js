@@ -1,18 +1,16 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import {
   CHeader,
-  CToggler,
   CHeaderBrand,
   CHeaderNav,
   CHeaderNavItem,
-  CHeaderNavLink,
   CSubheader,
   CBreadcrumbRouter
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {useHistory} from 'react-router-dom'
-import  {setUser, setAuthToken } from '../../redux/actions'
+import  {setUser} from '../../redux/actions'
 
 const TheHeader = ({user}) => {
     const history = useHistory();
@@ -30,16 +28,6 @@ const TheHeader = ({user}) => {
 
   return (
     <CHeader withSubheader>
-          {/* <CToggler
-            inHeader
-            className="ml-md-3 d-lg-none"
-            onClick={() => {}}
-          />
-          <CToggler
-            inHeader
-            className="ml-3 d-md-down-none"
-            onClick={() => {}}
-          /> */}
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
         <CIcon name="logo" height="48" alt="Logo"/>
       </CHeaderBrand>

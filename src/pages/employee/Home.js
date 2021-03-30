@@ -7,11 +7,10 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CButton,
   CContainer
 } from '@coreui/react'
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import Header from '../../components/containers/TheHeader';
 import Footer from '../../components/containers/TheFooter';
@@ -44,7 +43,7 @@ const TheContent = () => {
                 setTasks(response);
             })
             .catch(error => {
-                console.log(error);
+                //console.log(error);
             })
         }
         else{
@@ -74,7 +73,7 @@ const TheContent = () => {
                               striped
                               bordered
                               size="sm"
-                              itemsPerPage={2}
+                              itemsPerPage={5}
                               pagination
                               scopedSlots = {{
                                 'deadline':
