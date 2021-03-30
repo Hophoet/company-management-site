@@ -18,11 +18,12 @@ import {Link, useHistory} from 'react-router-dom'
 import {login} from '../api/authentication';
 import { useStateValue } from '../redux/StateProvider';
 import { useSelector, useDispatch } from 'react-redux';
-import  { setUser } from '../redux/actions'
+import  {setAuthToken } from '../redux/actions'
 
 const Login = () => {
-    const user = useSelector(state => {
-       return  state.auth.user;
+    const authToken = useSelector(state => {
+        console.log(state)
+       return  state.auth.authToken;
     });
     const dispatch = useDispatch();
     const history = useHistory();
@@ -30,7 +31,6 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        console.log(user)
 
     }, [])
 
@@ -40,7 +40,7 @@ const Login = () => {
             .then(response => {
                 if(response.key){
                     console.log(response) 
-                    dispatch(setUser({authToken:response.key}))
+                    dispatch(setAuthToken(response.key))
                     history.push('/')
                 }
             })
