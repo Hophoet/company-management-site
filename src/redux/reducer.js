@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import { SET_USER, SET_IS_ADMIN } from './actions'
+import { SET_USER, SET_IS_ADMIN, SET_AUTH_TOKEN } from './actions'
 
 
 const intialState = {
@@ -10,7 +10,6 @@ const intialState = {
 }
 
 const auth = (state=intialState, action) => {
-
     switch(action.type){
 
         case SET_USER:
@@ -22,6 +21,11 @@ const auth = (state=intialState, action) => {
             return {
                 ...state,
                 isAdmin: action.isAdmin
+            }
+        case SET_AUTH_TOKEN:
+            return {
+                ...state,
+                authToken: action.authToken
             }
         default:
             return state;
