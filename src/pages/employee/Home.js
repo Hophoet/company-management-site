@@ -30,13 +30,16 @@ const TheContent = () => {
     const user = useSelector(state => {
        return  state.auth.user;
     });
+    const authToken = useSelector(state => {
+       return  state.auth.authToken;
+    });
 	useEffect(() => {
-        _getEmployeeTasks();
-    }, [])	
+      _getEmployeeTasks();
+  }, [])	
 
     const _getEmployeeTasks = () => {
-        if(user.authToken){
-            getEmployeeTasks(user.authToken)
+        if(authToken){
+            getEmployeeTasks(authToken)
             .then(response => {
                 setTasks(response);
             })
@@ -52,7 +55,7 @@ const TheContent = () => {
   return (
     <div className="c-app c-default-layout">
         <div className="c-wrapper">
-            <Header/>
+            <Header user={user}/>
             <div className="c-body">
                 <main className="c-main">
                     <CContainer fluid>
